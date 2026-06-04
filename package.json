@@ -1,5 +1,6 @@
 {
   "scripts": {
+    "build": "rm -rf public && mkdir -p public && cp index.html application.html submitted.html styles.css favicon.png public/ && cp -R assets public/assets",
     "verify": "node verify_application.mjs"
   }
 }
