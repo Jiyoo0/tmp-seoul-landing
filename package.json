@@ -1,6 +1,5 @@
 {
   "scripts": {
-    "start": "node server.mjs",
     "verify": "node verify_application.mjs"
   }
 }
