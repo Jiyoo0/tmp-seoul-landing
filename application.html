@@ -1,0 +1,102 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>apply to /tmp Seoul</title>
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body class="application-page">
+    <main class="application-shell" aria-labelledby="application-title">
+      <a class="back-link" href="./index.html" aria-label="back to landing">←</a>
+
+      <section class="application-copy">
+        <img
+          class="application-logo"
+          src="./assets/tmp_seoul_logo.png"
+          alt="/tmp Seoul"
+          width="282"
+          height="50"
+        />
+
+        <p class="application-kicker">application</p>
+        <h1 id="application-title">tell us what you're building</h1>
+
+        <form id="application-form" class="application-form">
+          <div class="form-step is-active" data-step="1">
+            <label>
+              <span>your name</span>
+              <input name="name" type="text" autocomplete="name" required />
+            </label>
+
+            <label>
+              <span>phone number</span>
+              <input name="phone" type="tel" autocomplete="tel" required />
+            </label>
+
+            <label>
+              <span>email</span>
+              <input name="email" type="email" autocomplete="email" required />
+            </label>
+
+            <button class="step-button" type="button" data-next>next</button>
+          </div>
+
+          <div class="form-step" data-step="2">
+            <label>
+              <span>linkedin URL</span>
+              <input name="linkedin" type="url" inputmode="url" placeholder="https://" required />
+            </label>
+
+            <label>
+              <span>github / personal link</span>
+              <input name="link" type="url" inputmode="url" placeholder="https://" required />
+            </label>
+
+            <label>
+              <span>지금 무엇을 만들고 계신가요?</span>
+              <textarea name="building" rows="4" required></textarea>
+            </label>
+
+            <div class="form-actions">
+              <button class="ghost-button" type="button" data-prev>back</button>
+              <button type="submit">submit</button>
+            </div>
+          </div>
+
+          <p class="form-note" role="status" aria-live="polite"></p>
+        </form>
+      </section>
+    </main>
+
+    <script>
+      const form = document.querySelector("#application-form");
+      const note = document.querySelector(".form-note");
+      const steps = [...document.querySelectorAll(".form-step")];
+      const next = document.querySelector("[data-next]");
+      const prev = document.querySelector("[data-prev]");
+
+      function showStep(index) {
+        steps.forEach((step, stepIndex) => {
+          step.classList.toggle("is-active", stepIndex === index);
+        });
+        note.textContent = "";
+      }
+
+      next.addEventListener("click", () => {
+        const firstStepFields = steps[0].querySelectorAll("input");
+        const isValid = [...firstStepFields].every((field) => field.reportValidity());
+        if (isValid) showStep(1);
+      });
+
+      prev.addEventListener("click", () => showStep(0));
+
+      form.addEventListener("submit", (event) => {
+        event.preventDefault();
+        const data = Object.fromEntries(new FormData(form).entries());
+        localStorage.setItem("tmp-seoul-application-draft", JSON.stringify(data));
+        window.location.href = "./submitted.html";
+      });
+    </script>
+  </body>
+</html>
